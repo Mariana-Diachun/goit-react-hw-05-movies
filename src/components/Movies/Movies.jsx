@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import SearchBar from 'components/SearchBar/SearchBar';
-import { fetchFilms } from 'components/services/fetchFilms';
+import { fetchFilms } from 'services/fetchFilms';
 import { Link } from 'react-router-dom';
 
 export const Movies = ({ query }) => {
