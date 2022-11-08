@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-
 // import {
 //   Form,
 //   Input,
@@ -12,11 +11,6 @@ function SearchBar({ onSubmit }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get('query'));
 
-  const handleNameChange = event => {
-    setQuery(event.currentTarget.value.toLowerCase());
-    // console.log(query);
-  };
-
   function handleSubmit(event) {
     event.preventDefault();
     if (query === '') {
@@ -25,13 +19,7 @@ function SearchBar({ onSubmit }) {
     }
     const newQuery = event.currentTarget.elements.query.value;
     setQuery(newQuery);
-    // console.log(newQuery);
     setSearchParams({ query: newQuery });
-    // console.log(query);
-    // if (query === '') {
-    //   alert('Please enter a word');
-    //   return;
-    // }
     onSubmit(newQuery);
     setQuery('');
   }
@@ -39,12 +27,7 @@ function SearchBar({ onSubmit }) {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="query"
-          value={query}
-          onChangeText={handleNameChange}
-        />
+        <input type="text" name="query" />
         <button type="submit">Search film</button>
       </form>
     </div>

@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import SearchBar from 'components/SearchBar/SearchBar';
 import { fetchFilms } from 'services/fetchFilms';
-import { Link } from 'react-router-dom';
+import MoviesListBySearch from 'components/MoviesListBySearch/MoviesListBySearch';
 
-export const Movies = ({ query }) => {
+const Movies = ({ query }) => {
   const [filmSearch, setFilmSearch] = useState('');
   const [films, setFilms] = useState([]);
+  const [status, setStatus] = useState('idle');
 
   const handleFormSubmit = query => {
     setFilmSearch(query);
-    // console.log(query);
   };
 
   useEffect(() => {
@@ -21,20 +21,11 @@ export const Movies = ({ query }) => {
     });
   }, [filmSearch]);
 
-  // console.log(films);
-
   return (
     <div>
       <SearchBar onSubmit={handleFormSubmit} />
-      <ul>
-        {films.map(item => {
-          return (
-            <li key={item.id}>
-              <Link to={`${item.id}`}>{item.title} </Link>
-            </li>
-          );
-        })}
-      </ul>
+      <MoviesListBySearch films={films} />
     </div>
   );
 };
+export default Movies;

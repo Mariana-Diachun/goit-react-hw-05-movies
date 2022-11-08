@@ -11,3 +11,7 @@ export const Box = styled.div`
 export const InfoBox = styled.div`
   margin-left: 20px;
 `;
+
+export const AdditionalInfo = styled.div`
+  border-top: 1px solid black;
+`;

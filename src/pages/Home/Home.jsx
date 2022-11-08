@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { fetchPopularFilms } from 'services/fetchPopularFilms';
-import { MovieList } from 'components/MovieList/MovieList';
+import MovieList from 'components/MovieList/MovieList';
 
-export const Home = () => {
+const Home = () => {
   const [films, setFilms] = useState([]);
 
   useEffect(() => {
@@ -20,3 +20,4 @@ export const Home = () => {
     )
   );
 };
+export default Home;

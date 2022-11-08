@@ -1,32 +1,36 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useParams, useLocation, Link, Outlet } from 'react-router-dom';
 import { getMovieDetails } from 'services/getMovieDetails';
 import { IMG_URL } from 'constans/imgUrl';
-import { BackLink } from 'components/BackLink/BackLink';
+import BackLink from 'components/BackLink/BackLink';
 import {
   Wrapper,
   Box,
   InfoBox,
-} from 'components/MovieDetails/MovieDetails.styled';
+  AdditionalInfo,
+} from 'pages/MovieDetails/MovieDetails.styled';
+import Loader from 'components/Loader/Loader';
 
-export const MovieDetails = () => {
+const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState({});
+  const [genres, setGenres] = useState([]);
   const { movieId } = useParams();
   const location = useLocation();
-  const backLinkHref = location.state?.from ?? '/';
+  const backLinkHref = location.state?.from ?? -1;
 
   useEffect(() => {
     getMovieDetails(movieId).then(data => {
       setMovieDetails(data);
-      // console.log(data);
+      setGenres(data.genres);
     });
   }, [movieId]);
 
-  // const genres = useMemo(() => {
-  //   return movieDetails.genres.map(genre => genre.name).join(', ');
-  // }, [movieDetails]);
+  const getGenresName = () => {
+    return genres.map(genre => genre.name).join(', ');
+  };
+  const genre = getGenresName();
 
-  return (
+  return <Loader /> ? (
     <Box>
       <BackLink to={backLinkHref}>Go back</BackLink>
       <Wrapper>
@@ -38,15 +42,26 @@ export const MovieDetails = () => {
           <h3>User score:</h3>
           <p> {movieDetails.vote_average}</p>
           <h3>Genres:</h3>
-          {/* <p>{genres}</p> */}
+          <p>{genre}</p>
         </InfoBox>
       </Wrapper>
-      <div>
+      <AdditionalInfo>
         <h3>Additional information</h3>
-        <Link to="cast">Cast:</Link>
-        <Link to="reviews">Reviews:</Link>
-        <Outlet />
-      </div>
+        <Link to="cast">
+          <b>Cast:</b>
+        </Link>
+        <Link to="reviews">
+          <b>Reviews:</b>
+        </Link>
+
+        <Suspense fallback={<Loader />}>
+          <Outlet />
+        </Suspense>
+      </AdditionalInfo>
     </Box>
+  ) : (
+    <Loader />
   );
 };
+
+export default MovieDetails;
