@@ -17,6 +17,7 @@ const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState({});
   const [genres, setGenres] = useState([]);
   const { movieId } = useParams();
+
   const location = useLocation();
   const backLinkHref = location.state?.from ?? -1;
 
@@ -34,18 +35,16 @@ const MovieDetails = () => {
   const genre = getGenresName();
   const vote = Math.floor(movieDetails.vote_average * 10);
 
-  // const goBack = () => {
-  //   navigate(-1);
-  // };
-
   return <Loader /> ? (
     <Box>
-      {/* <button type="button" onClick={goBack}>
-        Go back
-      </button> */}
       <BackLink to={backLinkHref}>Go back</BackLink>
       <Wrapper>
-        <img src={`${IMG_URL}/w300${movieDetails.poster_path}`} alt="" />
+        {movieDetails.poster_path ? (
+          <img src={`${IMG_URL}/w300${movieDetails.poster_path}`} alt="" />
+        ) : (
+          <img src="Error.src" alt="" />
+        )}
+
         <InfoBox>
           <Title>{movieDetails.title}</Title>
           <h3>Overview :</h3>

@@ -1,28 +1,38 @@
 import { useState, useEffect } from 'react';
 import SearchBar from 'components/SearchBar/SearchBar';
-import { fetchFilms } from 'services/fetchFilms';
+import { useSearchParams } from 'react-router-dom';
+import { getMoviesBySearch } from 'services/getMoviesBySearch';
 import MoviesListBySearch from 'components/MoviesListBySearch/MoviesListBySearch';
 
 const Movies = () => {
-  const [filmSearch, setFilmSearch] = useState('');
-  const [films, setFilms] = useState([]);
+  const [searchFilms, setSearchMovies] = useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleFormSubmit = query => {
-    setFilmSearch(query);
-  };
+  const query = searchParams.get('query');
 
   useEffect(() => {
-    if (filmSearch === '') return;
+    if (query) {
+      const fetchSearchMovies = async () => {
+        try {
+          const data = await getMoviesBySearch(query);
+          setSearchMovies(data.results);
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      fetchSearchMovies();
+    }
+    return;
+  }, [query]);
 
-    fetchFilms(filmSearch).then(data => {
-      setFilms([...data.results]);
-    });
-  }, [filmSearch]);
+  const handleFormSubmit = q => {
+    setSearchParams({ query: q });
+  };
 
   return (
     <div>
       <SearchBar onSubmit={handleFormSubmit} />
-      <MoviesListBySearch films={films} />
+      <MoviesListBySearch films={searchFilms} />
     </div>
   );
 };
