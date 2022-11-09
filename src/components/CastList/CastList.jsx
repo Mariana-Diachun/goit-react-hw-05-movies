@@ -1,4 +1,5 @@
 import { IMG_URL } from 'constans/imgUrl';
+import PropTypes from 'prop-types';
 
 const CastList = ({ actors }) => {
   return (
@@ -20,4 +21,16 @@ const CastList = ({ actors }) => {
     </ul>
   );
 };
+
+CastList.propTypes = {
+  actors: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      profile_path: PropTypes.string,
+      name: PropTypes.string.isRequired,
+      character: PropTypes.string.isRequired,
+    })
+  ),
+};
+
 export default CastList;

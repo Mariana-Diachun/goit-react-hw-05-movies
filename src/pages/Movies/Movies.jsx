@@ -3,10 +3,9 @@ import SearchBar from 'components/SearchBar/SearchBar';
 import { fetchFilms } from 'services/fetchFilms';
 import MoviesListBySearch from 'components/MoviesListBySearch/MoviesListBySearch';
 
-const Movies = ({ query }) => {
+const Movies = () => {
   const [filmSearch, setFilmSearch] = useState('');
   const [films, setFilms] = useState([]);
-  const [status, setStatus] = useState('idle');
 
   const handleFormSubmit = query => {
     setFilmSearch(query);
@@ -17,7 +16,6 @@ const Movies = ({ query }) => {
 
     fetchFilms(filmSearch).then(data => {
       setFilms([...data.results]);
-      // console.log(films);
     });
   }, [filmSearch]);
 
