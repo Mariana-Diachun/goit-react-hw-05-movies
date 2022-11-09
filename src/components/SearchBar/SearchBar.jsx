@@ -32,7 +32,12 @@ function SearchBar({ onSubmit }) {
   return (
     <Box>
       <Form onSubmit={handleSubmit}>
-        <Input type="text" name="query" onChange={handleNameChange} />
+        <Input
+          type="text"
+          name="query"
+          query={query}
+          onChange={handleNameChange}
+        />
         <Button type="submit">Search film</Button>
       </Form>
     </Box>
