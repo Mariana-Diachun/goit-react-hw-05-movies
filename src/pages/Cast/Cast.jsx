@@ -1,4 +1,4 @@
-import { getMovieCredits } from 'services/getMovieCredits';
+import { getMovieCredits } from 'services/fetch';
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import CastList from 'components/CastList/CastList';

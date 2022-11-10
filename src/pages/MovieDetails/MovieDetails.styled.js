@@ -28,3 +28,24 @@ export const Info = styled.b`
 export const Title = styled.h1`
   color: red;
 `;
+export const Button = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border: none;
+  margin-top: 30px;
+  margin-left: 10px;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.88;
+  letter-spacing: 0.06em;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+  &:hover,
+  &:focus {
+    border-color: red;
+  }
+  cursor: pointer;
+  width: 100px;
+`;

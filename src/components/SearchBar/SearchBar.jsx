@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
-// import { useSearchParams } from 'react-router-dom';
 import {
   Input,
   Button,
@@ -9,7 +8,6 @@ import {
 } from 'components/SearchBar/SearchBar.styled';
 
 function SearchBar({ onSubmit }) {
-  // const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState('');
 
   const handleNameChange = event => {
@@ -25,11 +23,6 @@ function SearchBar({ onSubmit }) {
     }
     onSubmit(query);
     setQuery('');
-    // const newQuery = event.currentTarget.elements.query.value;
-    // setQuery(newQuery);
-    // setSearchParams({ query: newQuery });
-    // onSubmit(newQuery);
-    // setQuery('');
   }
 
   return (

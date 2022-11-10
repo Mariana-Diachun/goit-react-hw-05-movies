@@ -1,8 +1,8 @@
 import { useState, useEffect, Suspense } from 'react';
-import { useParams, Link, Outlet, useLocation } from 'react-router-dom';
-import { getMovieDetails } from 'services/getMovieDetails';
+import { useParams, Link, Outlet, useNavigate } from 'react-router-dom';
+import { GoChevronLeft } from 'react-icons/go';
+import { getMovieDetails } from 'services/fetch';
 import { IMG_URL } from 'constans/imgUrl';
-import BackLink from 'components/BackLink/BackLink';
 import {
   Wrapper,
   Box,
@@ -10,16 +10,16 @@ import {
   AdditionalInfo,
   Info,
   Title,
+  Button,
 } from 'pages/MovieDetails/MovieDetails.styled';
 import Loader from 'components/Loader/Loader';
 
 const MovieDetails = () => {
   const [movieDetails, setMovieDetails] = useState({});
   const [genres, setGenres] = useState([]);
-  const { movieId } = useParams();
 
-  const location = useLocation();
-  const backLinkHref = location.state?.from ?? -1;
+  const { movieId } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getMovieDetails(movieId).then(data => {
@@ -35,9 +35,16 @@ const MovieDetails = () => {
   const genre = getGenresName();
   const vote = Math.floor(movieDetails.vote_average * 10);
 
+  const goBack = () => {
+    navigate(-1);
+  };
+
   return <Loader /> ? (
     <Box>
-      <BackLink to={backLinkHref}>Go back</BackLink>
+      <Button onClick={goBack}>
+        <GoChevronLeft />
+        Go back
+      </Button>
       <Wrapper>
         {movieDetails.poster_path ? (
           <img src={`${IMG_URL}/w300${movieDetails.poster_path}`} alt="" />
@@ -58,12 +65,12 @@ const MovieDetails = () => {
       <AdditionalInfo>
         <h2>Additional information</h2>
         <li>
-          <Link to="cast">
+          <Link replace to="cast">
             <Info>Cast:</Info>
           </Link>
         </li>
         <li>
-          <Link to="reviews">
+          <Link replace to="reviews">
             <Info>Reviews:</Info>
           </Link>
         </li>
