@@ -49,3 +49,7 @@ export const Button = styled.button`
   cursor: pointer;
   width: 100px;
 `;
+
+export const MovieCard = styled.div`
+  padding: 5px;
+`;
